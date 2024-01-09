@@ -15,6 +15,17 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Debug
+      run: |
+        # Cetak informasi tentang identitas pengguna
+        whoami
+
+        # Cetak informasi hak akses ke folder Kontrakan
+        ls -la Kontrakan
+
+        # Cetak informasi hak akses ke folder .git di dalam Kontrakan
+        ls -la Kontrakan/.git
+
       - name: Deploy using ssh
         uses: appleboy/ssh-action@master
         with:
@@ -24,7 +35,6 @@ jobs:
           port: 22
           script: |
             cd /var/www/Kontrakan/
-            whoami
             git pull origin main -f
             git status
             composer install --optimize-autoloader --no-dev

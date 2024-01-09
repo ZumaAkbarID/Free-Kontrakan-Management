@@ -47,6 +47,7 @@ class WhatsApp extends Controller
         ];
 
         $url = self::$endpoin . '/send-msg';
+	Log::channel('api_wa')->info('Endpoin: ' . $url);
 
         try {
             $response = Http::post($url, $query, [
