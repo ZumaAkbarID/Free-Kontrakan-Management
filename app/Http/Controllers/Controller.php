@@ -46,8 +46,7 @@ class Controller extends BaseController
         $dayStartWeek = $id->startOfWeek();
         $dayEndWeek = $id->endOfWeek();
 
-        $cekPiket = Piket::whereBetween('created_at', [$dayStartWeek, $dayEndWeek])->with('user')->get();
-
+        $cekPiket = Piket::whereBetween('created_at', [$dayStartWeek, $dayEndWeek])->with('user')->where('user_id', Auth::user()->id)->get();
         $donePiket = false;
 
         foreach ($cekPiket as $data) {
