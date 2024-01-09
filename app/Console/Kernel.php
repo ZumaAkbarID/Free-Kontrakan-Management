@@ -18,7 +18,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('auto:piket')->dailyAt('08:00');
         $schedule->command('auto:piket')->dailyAt('19:00');
-	$schedule->command('auto:piket')->dailyAt('22:00');
+	$schedule->command('auto:piket')->dailyAt('22:10');
     }
 
     /**

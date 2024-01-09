@@ -9,13 +9,6 @@ use Illuminate\Support\Facades\Log;
 
 class WhatsApp extends Controller
 {
-    protected static $endpoin;
-
-    public function __construct()
-    {
-        self::$endpoin = Developer::find(1)->api_wa;
-    }
-
     private static function validatePhoneNumber($phoneNumber)
     {
         // Hanya boleh mengandung angka
@@ -46,7 +39,7 @@ class WhatsApp extends Controller
             'msg' => $text,
         ];
 
-        $url = self::$endpoin . '/send-msg';
+        $url = Developer::find(1)->api_wa . '/send-msg';
 	Log::channel('api_wa')->info('Endpoin: ' . $url);
 
         try {
