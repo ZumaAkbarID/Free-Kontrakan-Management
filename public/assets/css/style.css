@@ -50,6 +50,10 @@
 /*-------------------------------------------------------------------*/
 /* === SCSS Compass Functions === */
 
+label, td, th {
+  color: #fff !important;
+}
+
 @-webkit-keyframes flash {
   0% {
     opacity: 1; }
@@ -2204,7 +2208,7 @@ progress {
   margin-top: -1rem;
   margin-bottom: 1rem;
   font-size: 0.875em;
-  color: #6c757d; }
+  color: #fff; }
   .blockquote-footer::before {
     content: "\2014\00A0"; }
 
@@ -5686,7 +5690,7 @@ textarea.form-control-lg {
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #fff;
+  background-color: #7077A1;
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.3125rem; }
@@ -11303,8 +11307,8 @@ code {
 
 /* Footer */
 .footer {
-  background: #f2edf3;
-  color: color(dark);
+  background: #7077A1;
+  color: #fff;
   border-top: 1px solid #e7dee9;
   padding: 30px 1rem;
   transition: all 0.25s ease;
@@ -11314,7 +11318,7 @@ code {
   font-size: calc(0.875rem - 0.05rem);
   font-family: "ubuntu-regular", sans-serif; }
   .footer a {
-    color: #1bcfb4;
+    color: #fff;
     font-size: inherit; }
   @media (max-width: 991px) {
     .footer {
@@ -11587,7 +11591,7 @@ code {
 
 .rounded-legend ul li {
   list-style-type: none;
-  color: #9c9fa6;
+  color: #fff;
   font-size: .75rem; }
   .rounded-legend ul li .legend-dots {
     width: 1rem;
@@ -12933,13 +12937,13 @@ code {
 /* Cards */
 .card {
   border: 0;
-  background: #fff; }
+  background: #7077A1; }
   .card .card-body {
     padding: 2.5rem 2.5rem; }
     .card .card-body + .card-body {
       padding-top: 1rem; }
   .card .card-title {
-    color: #343a40;
+    color: #fff;
     margin-bottom: 0.75rem;
     text-transform: capitalize;
     font-family: "ubuntu-medium", sans-serif;
@@ -12949,7 +12953,7 @@ code {
     margin-top: 0.625rem;
     margin-bottom: 0.625rem; }
   .card .card-description {
-    color: #76838f;
+    color: #fff;
     margin-bottom: 1.5rem;
     font-family: "ubuntu-regular", sans-serif; }
   .card.card-outline-success {
@@ -13726,7 +13730,7 @@ dl {
 /* Navbar */
 .navbar {
   font-family: "ubuntu-light", sans-serif;
-  background: #fff;
+  background: #424769;
   transition: background 0.25s ease;
   -webkit-transition: background 0.25s ease;
   -moz-transition: background 0.25s ease;
@@ -13738,7 +13742,7 @@ dl {
     -webkit-transition: width 0.25s ease, background 0.25s ease;
     -moz-transition: width 0.25s ease, background 0.25s ease;
     -ms-transition: width 0.25s ease, background 0.25s ease;
-    background: #fff;
+    background: #424769;
     width: 260px;
     height: 70px; }
     @media (max-width: 991px) {
@@ -13771,7 +13775,7 @@ dl {
     -webkit-transition: width 0.25s ease;
     -moz-transition: width 0.25s ease;
     -ms-transition: width 0.25s ease;
-    color: #9c9fa6;
+    color: #fff;
     padding-left: 24px;
     padding-right: 24px;
     width: calc(100% - 260px);
@@ -13806,24 +13810,24 @@ dl {
       padding: .5rem; }
       .navbar .navbar-menu-wrapper .search-field .input-group input:-ms-input-placeholder {
         font-size: 0.875rem;
-        color: #9c9fa6;
+        color: #fff;
         font-family: "ubuntu-light", sans-serif; }
       .navbar .navbar-menu-wrapper .search-field .input-group input:-moz-placeholder {
         font-size: 0.875rem;
-        color: #9c9fa6;
+        color: #fff;
         font-family: "ubuntu-light", sans-serif; }
       .navbar .navbar-menu-wrapper .search-field .input-group input::-moz-placeholder {
         font-size: 0.875rem;
-        color: #9c9fa6;
+        color: #fff;
         font-family: "ubuntu-light", sans-serif; }
       .navbar .navbar-menu-wrapper .search-field .input-group input::-webkit-input-placeholder {
         font-size: 0.875rem;
-        color: #9c9fa6;
+        color: #fff;
         font-family: "ubuntu-light", sans-serif; }
     .navbar .navbar-menu-wrapper .search-field .input-group i {
       font-size: 17px;
       margin-right: 0;
-      color: #9c9fa6; }
+      color: #fff; }
     .navbar .navbar-menu-wrapper .search-field .input-group .input-group-text {
       background: transparent; }
     .navbar .navbar-menu-wrapper .count-indicator {
@@ -14107,7 +14111,7 @@ dl {
 /* Sidebar */
 .sidebar {
   min-height: calc(100vh - 70px);
-  background: #ffffff;
+  background: #424769;
   font-family: "ubuntu-regular", sans-serif;
   padding: 0;
   width: 260px;
@@ -14142,7 +14146,7 @@ dl {
         align-items: center;
         white-space: nowrap;
         padding: 1.125rem 0 1.125rem 0;
-        color: #3e4b5b;
+        color: #fff;
         -webkit-transition-duration: 0.45s;
         transition-duration: 0.45s;
         transition-property: color;
@@ -14440,7 +14444,7 @@ dl {
       width: 100%; } }
 
 .content-wrapper {
-  background: #f2edf3;
+  background: #2D3250;
   padding: 2.75rem 2.25rem;
   width: 100%;
   -webkit-box-flex: 1;

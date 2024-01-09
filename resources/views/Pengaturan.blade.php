@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row">
-  <div class="col-lg-6 col-sm-12 col-12">
+  <div class="col-lg-6 col-sm-12 col-12 mb-4">
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">Pengaturan Akun</h4>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Dev;
 use App\Http\Controllers\Login;
 use App\Http\Controllers\Logout;
 use App\Http\Controllers\Pengaturan;
+use App\Http\Controllers\Pengeluaran;
 use App\Http\Controllers\Piket;
 use App\Http\Controllers\Talangan;
 use Illuminate\Support\Facades\Hash;
@@ -55,4 +56,9 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
 Route::group(['middleware' => ['auth', 'isDev'], 'prefix' => 'dev'], function () {
     Route::get('/', [Dev::class, 'index'])->name('Developer');
     Route::post('/', [Dev::class, 'save']);
+});
+
+Route::group(['middleware' => ['auth', 'isBen'], 'prefix' => 'pengeluaran'], function () {
+    Route::get('/', [Pengeluaran::class, 'index'])->name('Bendahara');
+    Route::post('/', [Pengeluaran::class, 'save']);
 });

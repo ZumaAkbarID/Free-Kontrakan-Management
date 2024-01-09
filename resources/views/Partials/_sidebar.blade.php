@@ -45,6 +45,15 @@
       </li>
     @endif
     
+    @if ($user->role == "Bendahara" || $user->role == "Developer")
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('Bendahara') }}">
+          <span class="menu-title">Pengeluaran</span>
+          <i class="mdi mdi-cart menu-icon"></i>
+        </a>
+      </li>
+    @endif
+    
     @if (!$kasLunas || !$donePiket && $isPiket)
     <li class="nav-item sidebar-actions">
       <span class="nav-link">

@@ -3,30 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Enum\LedgerEnum;
-use App\Models\Developer;
 use App\Models\Ledgers;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
-class BayarKas extends Controller
+class Pengeluaran extends Controller
 {
-    function upload(Request $request)
+    function save(Request $request)
     {
-        if (parent::isKasLunas())
-            return redirect()->to(route('Dashboard'))->with('error', 'Udah ngirim boss');
-
         $user = parent::getUser();
 
-        $imgName = Str::slug($user->name) . '-' . date('M-Y');
+        $imgName = Str::slug($user->name) . '-' . Carbon::now()->week . '-' . Carbon::now()->year;
         $imgExtension = $request->file('bukti')->getClientOriginalExtension();
 
         $upload = ImageKit::upload(base64_encode($request->file('bukti')->getContent()), $imgName, $imgExtension);
         if (!is_null($upload['error']))
             return redirect()->back()->with('error', 'Ono kesalahan pas upload file reng API');
-
-        $kasDefault = Developer::find(1)->kas_default;
 
         $url = $upload['result']['url'];
 
@@ -42,18 +35,18 @@ class BayarKas extends Controller
         // Menggabungkan kembali URL
         $newUrl = implode('/', $urlParts);
 
-        $final_balance = Ledgers::latest()->first();
-        if (is_null($final_balance))
-            $finalBal = $kasDefault;
-        else
-            $finalBal = $final_balance->final_balance + $kasDefault;
-
         try {
+            $final_balance = Ledgers::latest()->first();
+            if (is_null($final_balance))
+                $finalBal = -$request->amount;
+            else
+                $finalBal = $final_balance->final_balance - $request->amount;
+
             $data = [
                 'user_id' => $user->id,
-                'transaction_purpose' => "Bayar Kas",
-                'status' => LedgerEnum::IN->value,
-                'amount' => $kasDefault,
+                'transaction_purpose' => $request->tujuan,
+                'status' => LedgerEnum::OUT->value,
+                'amount' => $request->amount,
                 'final_balance' => $finalBal,
                 'manual_prof' => $newUrl
             ];
@@ -68,15 +61,15 @@ class BayarKas extends Controller
 
     function index()
     {
+        $user = parent::getUser();
         $getPiket = parent::isPiketDone();
 
-        return view('BayarKas', [
-            'title' => 'Bayar Kas',
-            'user' => parent::getUser(),
+        return view('Pengeluaran', [
+            'title' => 'Pengeluaran',
+            'user' => $user,
             'donePiket' => $getPiket[1],
             'isPiket' => $getPiket[2],
             'kasLunas' => parent::isKasLunas(),
-            'defaultKas' => Developer::find(1)->kas_default
         ]);
     }
 }

@@ -81,7 +81,7 @@ class PiketCron extends Command
                 $msg = "";
                 $msg .= "*Informasi*\n\n";
                 $msg .= "User : {$acc->name}\n";
-                $msg .= "Sudah saatnya piket :D \n";
+                $msg .= "Hari ini giliran kamu piket :D \n";
                 $msg .= "Piket -> foto -> kirim buktinya ke : \n";
                 $msg .= route("Piket") . "\n\nTerima Kasih :D";
 
