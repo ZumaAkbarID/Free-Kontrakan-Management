@@ -24,6 +24,7 @@ jobs:
           port: 22
           script: |
             cd /var/www/Kontrakan/
+            whoami
             git pull origin main -f
             git status
             composer install --optimize-autoloader --no-dev
