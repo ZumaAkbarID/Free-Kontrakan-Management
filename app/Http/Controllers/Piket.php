@@ -13,7 +13,6 @@ class Piket extends Controller
 {
     function upload(Request $request)
     {
-        dd($request->except('_token'));
         $request->validate([
             'bukti' => 'required'
         ]);
@@ -24,6 +23,7 @@ class Piket extends Controller
         $imgExtension = $request->file('bukti')->getClientOriginalExtension();
 
         $upload = ImageKit::upload(base64_encode($request->file('bukti')->getContent()), $imgName, $imgExtension);
+        Log::info($upload);
         if (!is_null($upload['error']))
             return redirect()->back()->with('error', 'Ono kesalahan pas upload file reng API');
 
