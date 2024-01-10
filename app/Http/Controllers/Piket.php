@@ -6,6 +6,7 @@ use App\Models\Hari;
 use App\Models\Piket as ModelsPiket;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class Piket extends Controller
@@ -49,7 +50,8 @@ class Piket extends Controller
             ModelsPiket::create($data);
 
             return redirect()->to(route('Piket'))->with('success', "OK SIR NAIS");
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
+            Log::error("PIKET ERROR : " . $e->getMessage());
             return redirect()->back()->with('error', 'Gagal Create Lur');
         }
     }
