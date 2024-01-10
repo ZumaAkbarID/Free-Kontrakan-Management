@@ -1,4 +1,5 @@
 @extends('Layouts.Main')
+@inject('carbon', 'Carbon\Carbon')
 
 @section('content')
     <div class="row">
@@ -95,7 +96,7 @@
                     <img src="{{ asset('/storage') }}/profile/{{ $item->user->image }}" alt="image" />
                   </td>
                   <td> {{ $item->user->name }} </td>
-                  <td> {{ date('D, d M Y H:i:s', strtotime($item->created_at)) }} </td>
+                  <td> {{ $carbon::parse($item->created_at)->locale('id_ID')->translatedFormat('l, j F Y H:i:s') }} </td>
                   <td> 
                     <a href="javascript:void(0)" class="badge bg-info text-decoration-none cek-button" data-bs-toggle="modal" data-bs-target="#myModal" data-img-src="{{ $item->bukti }}">Cek</a>
                    </td>

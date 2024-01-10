@@ -1,4 +1,5 @@
 @extends('Layouts.Main')
+@inject('carbon', 'Carbon\Carbon')
 
 @section('content')
     <div class="row">
@@ -25,7 +26,7 @@
                                     <tr>
                                         <td> {{ $item->tujuan }} </td>
                                         <td> Rp. {{ number_format($item->amount, 0,',','.') }} </td>
-                                        <td> {{ date('D, d M Y H:i:s', strtotime($item->created_at)) }} </td>
+                                        <td> {{ $carbon::parse($item->created_at)->locale('id_ID')->translatedFormat('l, j F Y H:i:s') }} </td>
                                         <td>
                                             @if ($item->dikembalikan)
                                             <div class="badge bg-success">YA</div>
@@ -105,7 +106,7 @@
                                         <td> {{ $item->user->name }} </td>
                                         <td> {{ $item->tujuan }} </td>
                                         <td> Rp. {{ number_format($item->amount, 0,',','.') }} </td>
-                                        <td> {{ date('D, d M Y H:i:s', strtotime($item->created_at)) }} </td>
+                                        <td> {{ $carbon::parse($item->created_at)->locale('id_ID')->translatedFormat('l, j F Y H:i:s') }} </td>
                                         <td>
                                           @if ($item->dikembalikan)
                                             <div class="badge bg-success">YA</div>

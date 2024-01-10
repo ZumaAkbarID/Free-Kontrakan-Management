@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 
 use App\Http\Controllers\WhatsApp;
 use App\Models\Developer;
+use App\Models\Hari;
+use App\Models\JadwalPiket;
 use App\Models\Piket;
 use App\Models\User;
 use Carbon\Carbon;
@@ -35,46 +37,22 @@ class PiketCron extends Command
         $dev = Developer::find(1);
 
         foreach (User::all() as $acc) {
-            $userJadwalPiket = User::with('jadwalPiket.hari')->find($acc->id);
-
-            $hari = $userJadwalPiket->jadwalPiket->map(function ($item) {
-                return [
-                    $item->hari->day_en,
-                    $item->hari->id,
-                ];
-            })->all();
+            $hari = Hari::where('day_en', date('l'))->first();
 
             $id = CarbonImmutable::now()->locale('id_ID');
 
             $dayStartWeek = $id->startOfWeek();
             $dayEndWeek = $id->endOfWeek();
 
-            $cekPiket = Piket::whereBetween('created_at', [$dayStartWeek, $dayEndWeek])->with('user')->get();
+            $cekDonePiket = Piket::whereBetween('created_at', [$dayStartWeek, $dayEndWeek])->with('user')->where('user_id', $acc->id)->where('hari_id', $hari->id)->first();
 
-            $donePiket = false;
-
-            foreach ($cekPiket as $data) {
-                for ($i = 0; $i < count($hari); $i++) {
-                    if ($data->hari_id === $hari[$i][1]) {
-                        $donePiket = true;
-                        break;
-                    }
-                }
-                if ($donePiket)
-                    break;
-            }
-
+            $donePiket = ($cekDonePiket) ? true : false;
             $isPiket = false;
 
             if (!$donePiket) {
-                $hariToFind = Carbon::now()->dayName;
-
-                foreach ($hari as $data) {
-                    if ($data[0] === $hariToFind) {
-                        $isPiket = true;
-                        break;
-                    }
-                }
+                $cekIsPiket = JadwalPiket::where('hari_id', $hari->id)->where('user_id', $acc->id)->first();
+                if ($cekIsPiket)
+                    $isPiket = true;
             }
 
             if ($isPiket && !$donePiket && !$dev->liburan) {

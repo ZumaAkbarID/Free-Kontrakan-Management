@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Enum\LedgerEnum;
+use App\Models\Hari;
+use App\Models\JadwalPiket;
 use App\Models\Ledgers;
 use App\Models\Piket;
 use App\Models\User;
@@ -32,49 +34,27 @@ class Controller extends BaseController
 
     public function isPiketDone()
     {
-        $userJadwalPiket = User::with('jadwalPiket.hari')->find(Auth::user()->id);
-
-        $hari = $userJadwalPiket->jadwalPiket->map(function ($item) {
-            return [
-                $item->hari->day_en,
-                $item->hari->id,
-            ];
-        })->all();
+        $user = Auth::user();
+        $hari = Hari::where('day_en', date('l'))->first();
 
         $id = CarbonImmutable::now()->locale('id_ID');
 
         $dayStartWeek = $id->startOfWeek();
         $dayEndWeek = $id->endOfWeek();
 
-        $cekPiket = Piket::whereBetween('created_at', [$dayStartWeek, $dayEndWeek])->with('user')->where('user_id', Auth::user()->id)->get();
-        $donePiket = false;
+        $cekDonePiket = Piket::whereBetween('created_at', [$dayStartWeek, $dayEndWeek])->with('user')->where('user_id', $user->id)->where('hari_id', $hari->id)->first();
 
-        foreach ($cekPiket as $data) {
-            for ($i = 0; $i < count($hari); $i++) {
-                if ($data->hari_id === $hari[$i][1]) {
-                    $donePiket = true;
-                    break;
-                }
-            }
-            if ($donePiket)
-                break;
-        }
-
+        $donePiket = ($cekDonePiket) ? true : false;
         $isPiket = false;
 
         if (!$donePiket) {
-            $hariToFind = Carbon::now()->dayName;
-
-            foreach ($hari as $data) {
-                if ($data[0] === $hariToFind) {
-                    $isPiket = true;
-                    break;
-                }
-            }
+            $cekIsPiket = JadwalPiket::where('hari_id', $hari->id)->where('user_id', $user->id)->first();
+            if ($cekIsPiket)
+                $isPiket = true;
         }
 
         return [
-            $hari,
+            '', // ini biar ga error, males ganti semua wkakwa
             $donePiket,
             $isPiket
         ];

@@ -10,7 +10,7 @@
               @csrf
 
               <div class="form-group mb-3">
-                  <label for="">Tujuan Talangan?</label>
+                  <label for="">Tujuan Pengeluaran?</label>
                   <input type="text" name="tujuan" id="tujuan" class="form-control" required>
               </div>
 

@@ -6,13 +6,16 @@ use App\Models\Hari;
 use App\Models\Piket as ModelsPiket;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class Piket extends Controller
 {
     function upload(Request $request)
     {
+        $request->validate([
+            'bukti' => 'required'
+        ]);
+
         $user = parent::getUser();
 
         $imgName = Str::slug($user->name) . '-' . Carbon::now()->week . '-' . Carbon::now()->year;

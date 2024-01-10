@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Enum\LedgerEnum;
 use App\Models\Developer;
 use App\Models\Ledgers;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -60,6 +62,19 @@ class BayarKas extends Controller
 
             Ledgers::create($data);
 
+            $msg = "";
+            $msg .= "*Laporan Kas Masuk*\n\n";
+            $msg .= "User : {$user->name}\n";
+            $msg .= "Tulung dicek lur \n";
+            $msg .= "Bukti : \n";
+            $msg .= $newUrl;
+
+            foreach (User::where('role', 'Bendahara')->orWhere('role', 'Developer')->get() as $acc) {
+                if (!WhatsApp::WhatsAppSendMessage($acc->whatsapp, $msg)) {
+                    Log::channel('chat_kas')->error("Gagal mengirim chat ingfo kas dari {$user->name} ke {$acc->name} \n");
+                }
+            }
+
             return redirect()->to(route('Dashboard'))->with('success', "OK SIR NAIS");
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Gagal Create Lur');
@@ -76,7 +91,7 @@ class BayarKas extends Controller
             'donePiket' => $getPiket[1],
             'isPiket' => $getPiket[2],
             'kasLunas' => parent::isKasLunas(),
-            'defaultKas' => Developer::find(1)->kas_default
+            'developer' => Developer::find(1)
         ]);
     }
 }

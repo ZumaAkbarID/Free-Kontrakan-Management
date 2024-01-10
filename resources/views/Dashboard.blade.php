@@ -1,4 +1,5 @@
 @extends('Layouts/Main')
+@inject('carbon', 'Carbon\Carbon')
 
 @section('content')
 <div class="row">
@@ -40,7 +41,7 @@
 <div class="col-lg-12 grid-margin stretch-card">
   <div class="card">
     <div class="card-body">
-      <h4 class="card-title">Ledger Bulan {{ date('M Y') }}</h4>
+      <h4 class="card-title">Papan Ingfo</h4>
       </p>
       <div class="table-responsive">
         <table class="table">
@@ -101,7 +102,7 @@
               <td> <span class="badge bg-danger">{{ $item->transaction_purpose }}</span> </td>
               @endif
               <td> Rp. {{ number_format($item->amount, 0, ',','.') }} </td>
-              <td> {{ date('D, d M Y H:i:s', strtotime($item->created_at)) }} </td>
+              <td> {{ $carbon::parse($item->created_at)->locale('id_ID')->translatedFormat('l, j F Y H:i:s') }} </td>
               <td> 
                 <a href="javascript:void(0)" class="badge bg-info text-decoration-none cek-button" data-bs-toggle="modal" data-bs-target="#myModal" data-img-src="{{ $item->manual_prof }}">Cek</a>
               </td>
