@@ -13,6 +13,11 @@ class Piket extends Controller
 {
     function upload(Request $request)
     {
+        dd($request->except('_token'));
+        $request->validate([
+            'bukti' => 'required'
+        ]);
+
         $user = parent::getUser();
 
         $imgName = Str::slug($user->name) . '-' . Carbon::now()->week . '-' . Carbon::now()->year;
