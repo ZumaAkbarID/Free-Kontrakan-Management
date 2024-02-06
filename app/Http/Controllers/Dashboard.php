@@ -18,7 +18,7 @@ class Dashboard extends Controller
         $firstDateThisMonth = Carbon::now()->startOfMonth();
         $lastDateThisMonth = Carbon::now()->endOfMonth();
 
-        $sisaSaldo = Ledgers::whereBetween('created_at', [$firstDateThisMonth, $lastDateThisMonth])->orderBy('created_at', 'DESC')->first('final_balance');
+        $sisaSaldo = Ledgers::latest()->first('final_balance');
         $kasTerkumpul = Ledgers::whereBetween('created_at', [$firstDateThisMonth, $lastDateThisMonth])->where('status', LedgerEnum::IN->value)->sum('amount');
         $kasDefault = Developer::find(1)->kas_default;
         $allUser = User::count('id');
