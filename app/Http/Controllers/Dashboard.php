@@ -29,7 +29,6 @@ class Dashboard extends Controller
         return view('Dashboard', [
             'title' => 'Dashboard',
             'user' => parent::getUser(),
-            'ledgers' => Ledgers::whereBetween('created_at', [$firstDateThisMonth, $lastDateThisMonth])->with('user')->get(),
             'sisaSaldo' => (!is_null($sisaSaldo)) ? $sisaSaldo->final_balance : 0,
             'kasTerkumpul' => $kasTerkumpul->sum('amount'),
             'donePiket' => $getPiket[1],

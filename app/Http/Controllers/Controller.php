@@ -29,7 +29,7 @@ class Controller extends BaseController
         $firstDateThisMonth = Carbon::now()->startOfMonth();
         $lastDateThisMonth = Carbon::now()->endOfMonth();
 
-        return (Ledgers::whereBetween('created_at', [$firstDateThisMonth, $lastDateThisMonth])->where('user_id', Auth::user()->id)->where('status', LedgerEnum::IN->value)->get()->count() > 0) ? true : false;
+        return (Ledgers::whereBetween('created_at', [$firstDateThisMonth, $lastDateThisMonth])->where('user_id', Auth::user()->id)->where('status', LedgerEnum::IN->value)->where('transaction_purpose', 'Bayar Kas')->get()->count() > 0) ? true : false;
     }
 
     public function isPiketDone()
