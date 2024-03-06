@@ -5,6 +5,7 @@ use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Dev;
 use App\Http\Controllers\Login;
 use App\Http\Controllers\Logout;
+use App\Http\Controllers\PemasukanLain;
 use App\Http\Controllers\Pengaturan;
 use App\Http\Controllers\Pengeluaran;
 use App\Http\Controllers\Piket;
@@ -61,4 +62,9 @@ Route::group(['middleware' => ['auth', 'isDev'], 'prefix' => 'dev'], function ()
 Route::group(['middleware' => ['auth', 'isBen'], 'prefix' => 'pengeluaran'], function () {
     Route::get('/', [Pengeluaran::class, 'index'])->name('Bendahara');
     Route::post('/', [Pengeluaran::class, 'save']);
+});
+
+Route::group(['middleware' => ['auth', 'isBen'], 'prefix' => 'pemasukan-lain'], function () {
+    Route::get('/', [PemasukanLain::class, 'index'])->name('Bendahara.Lain');
+    Route::post('/', [PemasukanLain::class, 'save']);
 });
